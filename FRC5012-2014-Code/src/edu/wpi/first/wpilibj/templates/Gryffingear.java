@@ -100,7 +100,7 @@ public class Gryffingear extends IterativeRobot {
         pD = SmartDashboard.getNumber("pD", pD);
         picker.setPID(pP, pI, pD);
 //this will keep the picker and the kicker from interfering w/ each other in the beginning of the match
-        kicker.setAngle(kicker.STOWED_POS); //sets kicker in stowed position 
+        kicker.setAngle(kicker.STOWED_POS); //sets kicker in stowed position
         picker.setAngle(picker.LOAD_POS); //sets picker in a load position
 
         kicker.setMode(kicker.POS_MODE);
@@ -120,7 +120,7 @@ public class Gryffingear extends IterativeRobot {
         /* This is effectively the same code in RobotC
          motor[left1] = leftstick.getRawAxis(2);
          motor[left2] = leftstick.getRawAxis(2);
-        
+
          motor[right1] = rightstick.getRawAxis(2);
          motor[right2] = rightstick.getRawAxis(2);
          */
@@ -129,14 +129,14 @@ public class Gryffingear extends IterativeRobot {
 
         picker.setManual(true);
 
-         if(gamepad.getRawButton(8)) {
-            if (gamepad.getRawButton(8) && !prevKick && 
-                    kicker.getMode() != kicker.KICK_MODE) {
+        if (gamepad.getRawButton(8)) {
+            if (gamepad.getRawButton(8) && !prevKick
+                    && kicker.getMode() != kicker.KICK_MODE) {
                 kicker.kick();
                 prevKick = true;
             }
         } else if (!manualMode) { // if not in manual mode then these buttons will determine setpoint
-            prevKick=false;
+            prevKick = false;
             System.out.println("Teleop manual state");
             kicker.setSpeed(0.0);
             kicker.setMode(kicker.POS_MODE);
@@ -156,10 +156,8 @@ public class Gryffingear extends IterativeRobot {
             kicker.setAngle(kickerSetpoint);
 
             // Determine if we want to kick
-            
-
         } else { //is in manual mode
-            prevKick=false;
+            prevKick = false;
             kicker.setManual(true);
 
             if (gamepad.getRawButton(7)) {
@@ -261,7 +259,7 @@ public class Gryffingear extends IterativeRobot {
         }
     }
 
-    // Drive for 5 seconds, starting immediately 
+    // Drive for 5 seconds, starting immediately
     private void AutoMode0() {
         AutoDrive(startTime);
     }
