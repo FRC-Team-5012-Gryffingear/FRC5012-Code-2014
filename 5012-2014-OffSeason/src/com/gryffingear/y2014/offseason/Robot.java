@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package com.gryffingear.y2014.offseason;
 
+import com.gryffingear.y2014.offseason.utilities.NegativeInertiaAccumulator;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Victor;
@@ -28,9 +29,14 @@ public class Robot extends IterativeRobot {
     Victor rightDrive2 = new Victor(9);
     RobotDrive maindrive = new RobotDrive(leftDrive1, leftDrive2, rightDrive1, rightDrive2);
 
+    //ArmControl
+    Victor arm = new Victor(5);
+    Victor intake = new Victor(6);
+
     //Joysticks
     Joystick leftstick = new Joystick(1);
     Joystick rightstick = new Joystick(2);
+    Joystick gamepad = new Joystick(3);
 
     //Pneumatics
     Compressor compressor = new Compressor(2, 1);
@@ -50,17 +56,31 @@ public class Robot extends IterativeRobot {
 
     }
 
+    double quickTurn = 0.0;
+    double quickStop = 2.0;
+    NegativeInertiaAccumulator throttleNia = new NegativeInertiaAccumulator(quickStop);
+    NegativeInertiaAccumulator turningNia = new NegativeInertiaAccumulator(quickTurn);
+
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
 
-        double slowMode = .65;
+        double slowMode = 1.0;
         if (leftstick.getRawButton(1) || rightstick.getRawButton(1)) {
             slowMode = 1.0;
+            //throttleNia.setScalar(2.0);
+        } else {
+            //throttleNia.setScalar(1.0);
         }
-        maindrive.tankDrive(-leftstick.getRawAxis(2) * slowMode, -rightstick.getRawAxis(2) * slowMode);
 
+        double throttle = (leftstick.getRawAxis(2) + rightstick.getRawAxis(2)) / 2;
+        double turning = (leftstick.getRawAxis(2) - rightstick.getRawAxis(2)) / 2;
+        throttle += throttleNia.update(throttle);
+
+        maindrive.tankDrive(-(throttle + turning) * slowMode, -(throttle - turning) * slowMode);
+        arm.set(gamepad.getRawAxis(2));
+        intake.set(gamepad.getRawAxis(4));
     }
 
     /**
