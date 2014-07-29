@@ -5,13 +5,15 @@
  */
 package com.gryffingear.y2014.offseason.commands;
 
-import edu.wpi.first.wpilibj.command.*;
+import com.gryffingear.y2014.offseason.systems.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * Command for arcade driving.
  *
  * @author jeremy.germita@gmail.com (Jeremy Germita)
  */
-public class ArcadeDriveCommand {
+public class ArcadeDriveCommand extends Command {
 
     private double speed = 0.0;
     private double turn = 0.0;
@@ -21,14 +23,15 @@ public class ArcadeDriveCommand {
         this.speed = speed;
         this.speed = turn;
         this.speed = timeout;
+        this.setTimeout(timeout);
     }
 
     protected void initialize() {
-
+        Robot.getInstance().drive.tankDrive(speed + turn, speed - turn);
     }
 
     protected boolean isFinished() {
-        return
+        return this.isTimedOut();
     }
 
     protected void execute() {
@@ -36,10 +39,10 @@ public class ArcadeDriveCommand {
     }
 
     protected void end() {
-
+        Robot.getInstance().drive.tankDrive(0.0, 0.0);
     }
 
     protected void interrupted() {
-
+        Robot.getInstance().drive.tankDrive(0.0, 0.0);
     }
 }
