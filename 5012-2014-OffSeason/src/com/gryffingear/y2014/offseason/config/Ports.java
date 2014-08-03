@@ -22,6 +22,8 @@ public class Ports {
     public static int DRIVE_RIGHT_B_PORT = 9;
 
     public static int ARM_PORT = 5;
+    public static int ARM_POT = 1;
+
     public static int INTAKE_PORT = 6;
 
     public static int COMPRESSOR_RELAY_PORT = 1;

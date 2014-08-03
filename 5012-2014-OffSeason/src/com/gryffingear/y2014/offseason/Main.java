@@ -29,7 +29,6 @@ public class Main extends IterativeRobot {
 
     //drivetrain
     //ArmControl
-    Victor arm = new Victor(5);
     Victor intake = new Victor(6);
 
     //Joysticks
@@ -92,7 +91,16 @@ public class Main extends IterativeRobot {
         Robot.getInstance().drive.tankDrive(throttle + turning, throttle - turning);
 
         // OPERATOR /////////////
-        arm.set(gamepad.getRawAxis(2));
+        int armState = 0;
+        if (!gamepad.getRawButton(1)) {
+            armState = 0;
+            Robot.getInstance().arm.setManual(gamepad.getRawAxis(2));
+        } else {
+            armState = 1;
+            Robot.getInstance().arm.setTarget(2.61);
+        }
+
+        Robot.getInstance().arm.run(armState);
 
         intake.set(gamepad.getRawAxis(4));
 
@@ -103,6 +111,10 @@ public class Main extends IterativeRobot {
      */
     public void testPeriodic() {
 
+    }
+
+    public void disabledPeriodic() {
+        System.out.println(Robot.getInstance().arm.getPosition());
     }
 
 }

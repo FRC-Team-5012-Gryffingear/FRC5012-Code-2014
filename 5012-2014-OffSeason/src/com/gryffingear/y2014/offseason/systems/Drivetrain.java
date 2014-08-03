@@ -44,8 +44,8 @@ public class Drivetrain {
         leftA.set(leftV);
         leftB.set(leftV);
 
-        rightA.set(rightV);
-        rightB.set(rightV);
+        rightA.set(-rightV);
+        rightB.set(-rightV);
     }
 
 }

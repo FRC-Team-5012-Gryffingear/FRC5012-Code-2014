@@ -20,7 +20,7 @@ public class Constants {
 
     public static class Arm {
 
-        public static double ARM_P = 0.0;
+        public static double ARM_P = .50;
         public static double ARM_I = 0.0;
         public static double ARM_D = 0.0;
 
