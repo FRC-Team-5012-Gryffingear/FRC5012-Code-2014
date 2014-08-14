@@ -27,24 +27,20 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Main extends IterativeRobot {
 
-    //drivetrain
-    //ArmControl
-    Victor intake = new Victor(6);
+    Robot bot;
 
     //Joysticks
     Joystick leftstick = new Joystick(Ports.LEFT_JOY_PORT);
     Joystick rightstick = new Joystick(Ports.RIGHT_JOY_PORT);
     Joystick gamepad = new Joystick(Ports.OPERATOR_JOY_PORT);
 
-    //Pneumatics
-    Compressor compressor = new Compressor(2, 1);
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        //compressor.start();
+        bot = Robot.getInstance();
+
     }
 
     private CommandGroup currAuton = null;
@@ -88,23 +84,23 @@ public class Main extends IterativeRobot {
         double turning = (leftstick.getRawAxis(2) - rightstick.getRawAxis(2)) / 2;
         throttle += throttleNia.update(throttle);
 
-        Robot.getInstance().drive.tankDrive(throttle + turning, throttle - turning);
+        bot.drive.tankDrive(throttle + turning, throttle - turning);
 
         // OPERATOR /////////////
         int armState = 0;
 
         armState = 1;
         if (gamepad.getRawButton(3)) {
-            Robot.getInstance().arm.setTarget(2.23);
+            bot.shooter.arm.setTarget(2.23);
         } else if (gamepad.getRawButton(4)) {
-            Robot.getInstance().arm.setTarget(2.73);
+            bot.shooter.arm.setTarget(2.73);
         } else {
-            Robot.getInstance().arm.setTarget(3.17);
+            bot.shooter.arm.setTarget(3.17);
         }
 
-        Robot.getInstance().arm.run(armState);
+        bot.shooter.arm.run(armState);
 
-        intake.set(gamepad.getRawAxis(2));
+        bot.shooter.intake.set(gamepad.getRawAxis(4));
 
     }
 
@@ -116,7 +112,7 @@ public class Main extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        System.out.println(Robot.getInstance().arm.getPosition());
+        System.out.println(bot.shooter.arm.getPosition());
     }
 
 }

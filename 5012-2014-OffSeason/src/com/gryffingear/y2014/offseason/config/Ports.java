@@ -25,6 +25,7 @@ public class Ports {
     public static int ARM_POT = 1;
 
     public static int INTAKE_PORT = 6;
+    public static int INTAKE_JAW_PORT = 1;
 
     public static int COMPRESSOR_RELAY_PORT = 1;
     public static int COMPRESSOR_SWITCH_PORT = 2;

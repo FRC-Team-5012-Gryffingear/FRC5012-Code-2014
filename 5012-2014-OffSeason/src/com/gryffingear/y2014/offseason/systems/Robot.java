@@ -6,6 +6,7 @@
 package com.gryffingear.y2014.offseason.systems;
 
 import com.gryffingear.y2014.offseason.config.Ports;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  * Class containing all robot subsystems.
@@ -17,15 +18,20 @@ public class Robot {
     private static Robot instance = null;
 
     public Drivetrain drive = null;
-    public Arm arm = null;
+    public Shooter shooter = null;
+
+    Compressor compressor = null;
 
     private Robot() {
         drive = new Drivetrain(Ports.DRIVE_LEFT_A_PORT,
                 Ports.DRIVE_LEFT_B_PORT,
                 Ports.DRIVE_RIGHT_A_PORT,
                 Ports.DRIVE_RIGHT_B_PORT);
-        arm = new Arm(Ports.ARM_PORT,
-                Ports.ARM_POT);
+        shooter = Shooter.getInstance();
+
+        compressor = new Compressor(Ports.COMPRESSOR_SWITCH_PORT,
+                Ports.COMPRESSOR_RELAY_PORT);
+        compressor.start();
 
     }
 
