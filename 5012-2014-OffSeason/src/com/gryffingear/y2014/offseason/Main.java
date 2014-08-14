@@ -92,17 +92,19 @@ public class Main extends IterativeRobot {
 
         // OPERATOR /////////////
         int armState = 0;
-        if (!gamepad.getRawButton(1)) {
-            armState = 0;
-            Robot.getInstance().arm.setManual(gamepad.getRawAxis(2));
+
+        armState = 1;
+        if (gamepad.getRawButton(3)) {
+            Robot.getInstance().arm.setTarget(2.23);
+        } else if (gamepad.getRawButton(4)) {
+            Robot.getInstance().arm.setTarget(2.73);
         } else {
-            armState = 1;
-            Robot.getInstance().arm.setTarget(2.61);
+            Robot.getInstance().arm.setTarget(3.17);
         }
 
         Robot.getInstance().arm.run(armState);
 
-        intake.set(gamepad.getRawAxis(4));
+        intake.set(gamepad.getRawAxis(2));
 
     }
 

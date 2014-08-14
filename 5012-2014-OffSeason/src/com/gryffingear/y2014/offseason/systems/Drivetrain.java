@@ -41,11 +41,11 @@ public class Drivetrain {
      * @param rightV
      */
     public void tankDrive(double leftV, double rightV) {
-        leftA.set(leftV);
-        leftB.set(leftV);
+        leftA.set(-leftV);
+        leftB.set(-leftV);
 
-        rightA.set(-rightV);
-        rightB.set(-rightV);
+        rightA.set(rightV);
+        rightB.set(rightV);
     }
 
 }

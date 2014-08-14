@@ -35,11 +35,11 @@ public class Arm {
 
     private void set(double value) {
 
-        if (value > .3) {
-            value = .3;
-        } else if (value < -.3) {
-            value = -.3;
-        }
+        /*if (value > .3) {
+         value = .3;
+         } else if (value < -.3) {
+         value = -.3;
+         }*/
         arm_Motor.set(value);
     }
 
