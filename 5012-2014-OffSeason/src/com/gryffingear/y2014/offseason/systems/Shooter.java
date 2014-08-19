@@ -37,6 +37,7 @@ public class Shooter {
 
     public void run(int state) {
 
+        state = States.OFF;
         if (state == States.COLLECT_BALL) {
             arm.run(Arm.States.CLOSED_LOOP);
             arm.setTarget(1.86);

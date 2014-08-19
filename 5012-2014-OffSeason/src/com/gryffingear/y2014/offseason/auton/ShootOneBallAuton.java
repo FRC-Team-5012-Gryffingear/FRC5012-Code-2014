@@ -21,8 +21,8 @@ public class ShootOneBallAuton extends CommandGroup {
     public ShootOneBallAuton() {
         this.addSequential(new WaitCommand(5.0));
         this.addSequential(new ArcadeDriveCommand(0.5, 0.0, 3));
-        this.addSequential(new SetArmPositionCommand(2.5, 2.0));
-        this.addSequential(new IntakeCommand(1.0, Constants.Intake.JAW_OPEN));
+        this.addSequential(new SetArmPositionCommand(2.73, 2.0));
+        this.addSequential(new IntakeCommand(1.0, Constants.Intake.JAW_CLOSE));
     }
 
 }

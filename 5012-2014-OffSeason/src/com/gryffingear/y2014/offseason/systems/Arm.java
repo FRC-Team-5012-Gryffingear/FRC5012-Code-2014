@@ -19,6 +19,8 @@ public class Arm {
     private AnalogChannel pot;
     private double target = 0;
     private double manual = 0;
+    private double upperLimit = 3.926;
+    private double lowerLimit = 2.022;
 
     /**
      * Constructor
@@ -40,6 +42,7 @@ public class Arm {
         double answer = pot.getVoltage();
         answer = answer * Constants.Arm.VOLTS_TO_DEGREES;
         return answer;
+
     }
 
     /**
@@ -48,7 +51,14 @@ public class Arm {
      * @param value
      */
     private void set(double value) {
+
+        if (value >= 0 && getPosition() >= upperLimit) {
+            value = 0;
+        } else if (value < 0 && getPosition() <= lowerLimit) {
+            value = 0;
+        }
         arm_Motor.set(value);
+
     }
 
     /**

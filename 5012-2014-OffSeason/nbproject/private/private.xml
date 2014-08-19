@@ -4,13 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/Main.java</file>
-            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/commands/SetArmCommand.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/systems/Intake.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/commands/SetArmPositionCommand.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/auton/ShootOneBallAuton.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/auton/TestAuton.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/systems/Arm.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/systems/Shooter.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/commands/IntakeCommand.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/commands/ArcadeDriveCommand.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/config/Constants.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/systems/Robot.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/config/Ports.java</file>
-            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/commands/WaitCommand.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/systems/Drivetrain.java</file>
         </group>
     </open-files>

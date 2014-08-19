@@ -20,8 +20,8 @@ public class ArcadeDriveCommand extends Command {
     private double timeout = 0.0;
 
     public ArcadeDriveCommand(double speed, double turn, double timeout) {
-        this.speed = speed;
-        this.speed = turn;
+        this.speed = -speed;
+        this.speed = -turn;
         this.speed = timeout;
         this.setTimeout(timeout);
     }

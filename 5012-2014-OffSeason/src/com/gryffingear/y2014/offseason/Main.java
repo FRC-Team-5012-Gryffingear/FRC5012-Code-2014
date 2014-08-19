@@ -6,15 +6,13 @@
 /*----------------------------------------------------------------------------*/
 package com.gryffingear.y2014.offseason;
 
-import com.gryffingear.y2014.offseason.auton.TestAuton;
+import com.gryffingear.y2014.offseason.auton.ShootOneBallAuton;
 import com.gryffingear.y2014.offseason.config.Constants;
 import com.gryffingear.y2014.offseason.config.Ports;
 import com.gryffingear.y2014.offseason.systems.Robot;
 import com.gryffingear.y2014.offseason.utilities.NegativeInertiaAccumulator;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -51,7 +49,7 @@ public class Main extends IterativeRobot {
             currAuton = null;
         }
 
-        currAuton = new TestAuton();
+        currAuton = new ShootOneBallAuton();
 
         Scheduler.getInstance().add(currAuton);
     }
@@ -101,6 +99,7 @@ public class Main extends IterativeRobot {
         bot.shooter.arm.run(armState);
 
         bot.shooter.intake.set(gamepad.getRawAxis(4));
+        bot.shooter.intake.setJaw(gamepad.getRawButton(5));
 
     }
 
