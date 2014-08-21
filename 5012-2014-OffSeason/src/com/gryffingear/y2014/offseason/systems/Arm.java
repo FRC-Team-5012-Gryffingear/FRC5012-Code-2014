@@ -6,10 +6,12 @@
 package com.gryffingear.y2014.offseason.systems;
 
 import com.gryffingear.y2014.offseason.config.Constants;
+import com.gryffingear.y2014.offseason.utilities.EagleMath;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
+ * Class containing methods pertaining to the arm joint system.
  *
  * @author jeremy.germita@gmail.com (Jeremy Germita)
  */
@@ -19,8 +21,9 @@ public class Arm {
     private AnalogChannel pot;
     private double target = 0;
     private double manual = 0;
-    private double upperLimit = 3.926;
-    private double lowerLimit = 2.022;
+
+    private double lowerLimit = Constants.Arm.LOWER_LIMIT;
+    private double upperLimit = Constants.Arm.UPPER_LIMIT;
 
     /**
      * Constructor
@@ -41,6 +44,7 @@ public class Arm {
     public double getPosition() {
         double answer = pot.getVoltage();
         answer = answer * Constants.Arm.VOLTS_TO_DEGREES;
+        answer = EagleMath.truncate(answer, 4);
         return answer;
 
     }
@@ -51,7 +55,6 @@ public class Arm {
      * @param value
      */
     private void set(double value) {
-
         if (value >= 0 && getPosition() >= upperLimit) {
             value = 0;
         } else if (value < 0 && getPosition() <= lowerLimit) {
@@ -88,17 +91,11 @@ public class Arm {
         double output = 0.0;
 
         if (state == States.MANUAL) {           // Manual mode
-
             output = manual;
-
         } else if (state == States.CLOSED_LOOP) {    // Closed loop mode
-
             output = (target - getPosition()) * Constants.Arm.ARM_P;
-
         } else if (state == States.OFF) {
-
             output = 0;
-
         }
 
         this.set(output);
@@ -106,8 +103,18 @@ public class Arm {
 
     public static class States {
 
+        /**
+         * Open loop state where input = output.
+         */
         public static int MANUAL = 0;
+        /**
+         * Closed loop state where input is a set position and output is
+         * automatically adjusted.
+         */
         public static int CLOSED_LOOP = 1;
+        /**
+         * State where output is 0.
+         */
         public static int OFF = -1;
     }
 

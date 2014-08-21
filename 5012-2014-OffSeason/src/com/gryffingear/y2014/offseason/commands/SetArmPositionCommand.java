@@ -5,17 +5,19 @@
  */
 package com.gryffingear.y2014.offseason.commands;
 
+import com.gryffingear.y2014.offseason.config.Constants;
 import com.gryffingear.y2014.offseason.systems.Arm;
 import com.gryffingear.y2014.offseason.systems.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * Command for setting
  *
  * @author jeremy.germita@gmail.com (Jeremy Germita)
  */
 public class SetArmPositionCommand extends Command {
 
-    private double target = 0.0;
+    private double target = Constants.Arm.LOWER_LIMIT;
 
     public SetArmPositionCommand(double target, double timeout) {
         this.target = target;

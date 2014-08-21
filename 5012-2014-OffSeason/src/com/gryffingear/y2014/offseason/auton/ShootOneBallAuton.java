@@ -13,6 +13,7 @@ import com.gryffingear.y2014.offseason.config.Constants;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
+ * Autonomous mode to demonstrate features for shooter.
  *
  * @author jeremy.germita@gmail.com (Jeremy Germita)
  */

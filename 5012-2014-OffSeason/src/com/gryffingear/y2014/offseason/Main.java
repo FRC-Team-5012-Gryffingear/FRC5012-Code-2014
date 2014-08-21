@@ -41,16 +41,22 @@ public class Main extends IterativeRobot {
 
     }
 
-    private CommandGroup currAuton = null;
+    private CommandGroup currAuton = null;  // Object representing currently
+    // selected autonomous mode
 
     public void autonomousInit() {
+
+        // Cancel auton if it is currently running for safety.
         if (currAuton != null) {
             currAuton.cancel();
             currAuton = null;
         }
 
+        // Initialize new auton.
+        // Todo: make this selectable via smartdashboard or something.
         currAuton = new ShootOneBallAuton();
 
+        // Add the currently selected auton to the scheduler for execution.
         Scheduler.getInstance().add(currAuton);
     }
 
@@ -58,9 +64,11 @@ public class Main extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        // Run the scheduler.
         Scheduler.getInstance().run();
     }
 
+    // Quickturn and quickstop neg inertia accumulators for driver.
     NegativeInertiaAccumulator throttleNia = new NegativeInertiaAccumulator(Constants.Drivetrain.QUICK_STOP);
     NegativeInertiaAccumulator turningNia = new NegativeInertiaAccumulator(Constants.Drivetrain.QUICK_TURN);
 
@@ -78,17 +86,25 @@ public class Main extends IterativeRobot {
             //throttleNia.setScalar(1.0);
         }
 
+        // Driver inputs converted to make quickstop and quickturn easier.
         double throttle = (leftstick.getRawAxis(2) + rightstick.getRawAxis(2)) / 2;
         double turning = (leftstick.getRawAxis(2) - rightstick.getRawAxis(2)) / 2;
+
         throttle += throttleNia.update(throttle);
 
+        // Output drive inputs.
         bot.drive.tankDrive(throttle + turning, throttle - turning);
 
         // OPERATOR /////////////
-        int armState = 0;
+        int armState = 1;
 
-        armState = 1;
+        // Operator control logic:
+        // Todo: change these to manipulate states of shooter supersystem rather
+        // than just the arm subsystem.
+        // Todo: make these controls more intuitive.
         if (gamepad.getRawButton(3)) {
+            // Todo: change these to reference constants rather than hard-coded
+            // numbers.
             bot.shooter.arm.setTarget(2.23);
         } else if (gamepad.getRawButton(4)) {
             bot.shooter.arm.setTarget(2.73);
@@ -96,8 +112,10 @@ public class Main extends IterativeRobot {
             bot.shooter.arm.setTarget(3.17);
         }
 
+        // Runs the control loops for shooter supersystem.
         bot.shooter.arm.run(armState);
 
+        // Intake position and motor controls
         bot.shooter.intake.set(gamepad.getRawAxis(4));
         bot.shooter.intake.setJaw(gamepad.getRawButton(5));
 
@@ -107,11 +125,13 @@ public class Main extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-
+        // Nothing in test yet.
+        // Todo: do test stuff.
     }
 
     public void disabledPeriodic() {
-        System.out.println(bot.shooter.arm.getPosition());
+        // Print out arm position for debugging
+        System.out.println("Arm Position: " + bot.shooter.arm.getPosition());
     }
 
 }

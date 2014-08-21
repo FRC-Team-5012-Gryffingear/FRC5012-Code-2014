@@ -17,12 +17,22 @@ public class Robot {
 
     private static Robot instance = null;
 
+    /**
+     * Robot's instance of drivetrain
+     */
     public Drivetrain drive = null;
+    /**
+     * Robot's instance of shooter supersystem
+     */
     public Shooter shooter = null;
-
-    Compressor compressor = null;
+    /**
+     * Robot's instance of compressor supersystem
+     */
+    public Compressor compressor = null;
 
     private Robot() {
+
+        // Initialize all robot subsystems.
         drive = new Drivetrain(Ports.DRIVE_LEFT_A_PORT,
                 Ports.DRIVE_LEFT_B_PORT,
                 Ports.DRIVE_RIGHT_A_PORT,
@@ -35,6 +45,9 @@ public class Robot {
 
     }
 
+    /**
+     * Get current instance of robot supersystem and all associated subsystems.
+     */
     public static Robot getInstance() {
         if (instance == null) {
             instance = new Robot();

@@ -35,13 +35,24 @@ public class Shooter {
         return instance;
     }
 
+    public void setJawPosition(boolean pos) {
+
+    }
+
+    public void setIntakeSpeed(double speed) {
+
+    }
+
+    public void setWantShoot() {
+
+    }
+
     public void run(int state) {
 
         state = States.OFF;
         if (state == States.COLLECT_BALL) {
             arm.run(Arm.States.CLOSED_LOOP);
             arm.setTarget(1.86);
-
             intake.set(1.0);
             intake.setJaw(Constants.Intake.JAW_CLOSE);
         } else if (state == States.READY_FOR_SHOT) {
@@ -51,11 +62,9 @@ public class Shooter {
             intake.set(0.0);
             intake.setJaw(Constants.Intake.JAW_OPEN);
         } else if (state == States.OFF) {
-
             arm.run(Arm.States.OFF);
             arm.setManual(0.0);
             intake.set(0.0);
-
         }
 
     }

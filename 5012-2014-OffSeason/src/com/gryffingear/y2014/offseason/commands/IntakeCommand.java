@@ -10,6 +10,7 @@ import com.gryffingear.y2014.offseason.systems.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * Command to control intake system.
  *
  * @author jeremy.germita@gmail.com (Jeremy Germita)
  */

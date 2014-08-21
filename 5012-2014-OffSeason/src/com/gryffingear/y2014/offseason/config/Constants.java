@@ -21,12 +21,18 @@ package com.gryffingear.y2014.offseason.config;
  */
 public class Constants {
 
+    /**
+     * Class containing constants relevant to the drivetrain system.
+     */
     public static class Drivetrain {
 
         public static double QUICK_STOP = 2.0;
         public static double QUICK_TURN = 0.0;
     }
 
+    /**
+     * Class containing constants relevant to the arm joint system.
+     */
     public static class Arm {
 
         public static double ARM_P = .50;
@@ -35,12 +41,42 @@ public class Constants {
 
         public static double VOLTS_TO_DEGREES = 1.0;
 
+        public static double UPPER_LIMIT = 3.926;
+        public static double LOWER_LIMIT = UPPER_LIMIT - 1.904;
+
+        public static double STOW_POS = UPPER_LIMIT - 0.05;
+        public static double INBOUND_POS = UPPER_LIMIT - 0.15;
+        public static double PICKUP_POS = LOWER_LIMIT + .05;
+
     }
 
+    /**
+     * Class containing constants relevant to the intake system.
+     */
     public static class Intake {
 
         public static boolean JAW_OPEN = true;
         public static boolean JAW_CLOSE = false;
+    }
+
+    /**
+     * Class containing constants relevant to the puncher system.
+     */
+    public static class Puncher {
+
+        public static boolean Puncher_Punch = true;
+    }
+
+    /**
+     * Class containing constants relevant to the shooter supersystem.
+     */
+    public static class Shooter {
+
+    }
+
+    public static class Blocker {
+
+        public static boolean Blocker_close = false;
     }
 
 }
