@@ -114,7 +114,7 @@ public class Main extends IterativeRobot {
 
         // Runs the control loops for shooter supersystem.
         bot.shooter.arm.run(armState);
-
+        bot.shooter.puncher.setPuncher(gamepad.getRawButton(8));
         // Intake position and motor controls
         bot.shooter.intake.set(gamepad.getRawAxis(4));
         bot.shooter.intake.setJaw(gamepad.getRawButton(5));

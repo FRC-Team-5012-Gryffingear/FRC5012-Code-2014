@@ -56,7 +56,7 @@ public class Constants {
     public static class Intake {
 
         public static boolean JAW_OPEN = true;
-        public static boolean JAW_CLOSE = false;
+        public static boolean JAW_CLOSE = !JAW_OPEN;
     }
 
     /**
@@ -64,7 +64,7 @@ public class Constants {
      */
     public static class Puncher {
 
-        public static boolean Puncher_Punch = true;
+        public static boolean PUNCHER_PUNCHED = true;
     }
 
     /**
@@ -76,7 +76,7 @@ public class Constants {
 
     public static class Blocker {
 
-        public static boolean Blocker_close = false;
+        public static boolean BLOCKER_RETRACT = true;
     }
 
 }

@@ -19,12 +19,14 @@ public class Shooter {
 
     public Arm arm = null;
     public Intake intake = null;
+    public Puncher puncher = null;
 
     private Shooter() {
         arm = new Arm(Ports.ARM_PORT,
                 Ports.ARM_POT);
         intake = new Intake(Ports.INTAKE_PORT,
                 Ports.INTAKE_JAW_PORT);
+        puncher = new Puncher(Ports.Puncher_Port);
     }
 
     public static Shooter getInstance() {
