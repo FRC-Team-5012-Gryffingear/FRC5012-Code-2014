@@ -97,6 +97,7 @@ public class Main extends IterativeRobot {
 
         // OPERATOR /////////////
         int armState = 1;
+        double intakeOut = 0.0;
 
         // Operator control logic:
         // Todo: change these to manipulate states of shooter supersystem rather
@@ -105,19 +106,29 @@ public class Main extends IterativeRobot {
         if (gamepad.getRawButton(3)) {
             // Todo: change these to reference constants rather than hard-coded
             // numbers.
-            bot.shooter.arm.setTarget(2.23);
+            bot.shooter.arm.setTarget(Constants.Arm.INBOUND_POS);
         } else if (gamepad.getRawButton(4)) {
-            bot.shooter.arm.setTarget(2.73);
+            bot.shooter.arm.setTarget(Constants.Arm.PICKUP_POS);
         } else {
-            bot.shooter.arm.setTarget(3.17);
+            bot.shooter.arm.setTarget(Constants.Arm.STOW_POS);
+        }
+        //Roller intake controls.
+        if (gamepad.getRawAxis(2) > 0.3) {
+            intakeOut = 1.0;
+        } else if (gamepad.getRawAxis(2) < -0.3) {
+            intakeOut = -1.0;
+        } else {
+            intakeOut = 0;
         }
 
         // Runs the control loops for shooter supersystem.
         bot.shooter.arm.run(armState);
-        bot.shooter.puncher.setPuncher(gamepad.getRawButton(8));
+        //bot.shooter.puncher.shoot(gamepad.getRawButton(8));
+        bot.shooter.intake.set(intakeOut);
+
         // Intake position and motor controls
-        bot.shooter.intake.set(gamepad.getRawAxis(4));
-        bot.shooter.intake.setJaw(gamepad.getRawButton(5));
+        //bot.shooter.intake.setJaw(gamepad.getRawButton(7));
+        bot.shooter.shoot(gamepad.getRawButton(8));
 
     }
 
@@ -131,7 +142,7 @@ public class Main extends IterativeRobot {
 
     public void disabledPeriodic() {
         // Print out arm position for debugging
-        System.out.println("Arm Position: " + bot.shooter.arm.getPosition());
+        System.out.println("Arm Position: " + bot.shooter.arm.getOffset());
     }
 
 }

@@ -42,11 +42,11 @@ public class Constants {
         public static double VOLTS_TO_DEGREES = 1.0;
 
         public static double UPPER_LIMIT = 3.926;
-        public static double LOWER_LIMIT = UPPER_LIMIT - 1.904;
+        public static double LOWER_LIMIT = UPPER_LIMIT - 1.826;
 
-        public static double STOW_POS = UPPER_LIMIT - 0.05;
-        public static double INBOUND_POS = UPPER_LIMIT - 0.15;
-        public static double PICKUP_POS = LOWER_LIMIT + .05;
+        public static double STOW_POS = UPPER_LIMIT - 1.696;
+        public static double INBOUND_POS = UPPER_LIMIT - 1.196;
+        public static double PICKUP_POS = UPPER_LIMIT - 0.756;
 
     }
 

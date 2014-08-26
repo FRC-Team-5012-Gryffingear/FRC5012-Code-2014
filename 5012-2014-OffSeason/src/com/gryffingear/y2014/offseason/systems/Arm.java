@@ -49,6 +49,10 @@ public class Arm {
 
     }
 
+    public double getOffset() {
+        return this.upperLimit - getPosition();
+    }
+
     /**
      * Sets motor controller output
      *

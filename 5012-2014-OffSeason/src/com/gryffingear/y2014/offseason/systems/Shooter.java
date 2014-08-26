@@ -26,7 +26,8 @@ public class Shooter {
                 Ports.ARM_POT);
         intake = new Intake(Ports.INTAKE_PORT,
                 Ports.INTAKE_JAW_PORT);
-        puncher = new Puncher(Ports.Puncher_Port);
+        puncher = new Puncher(Ports.PUNCHER_PORT);
+        arm.setTarget(Constants.Arm.STOW_POS);
     }
 
     public static Shooter getInstance() {
@@ -51,24 +52,22 @@ public class Shooter {
 
     public void run(int state) {
 
-        state = States.OFF;
-        if (state == States.COLLECT_BALL) {
-            arm.run(Arm.States.CLOSED_LOOP);
-            arm.setTarget(1.86);
-            intake.set(1.0);
-            intake.setJaw(Constants.Intake.JAW_CLOSE);
-        } else if (state == States.READY_FOR_SHOT) {
-            arm.run(Arm.States.CLOSED_LOOP);
-            arm.setTarget(2.5);
+    }
+    private boolean prevShot = false;
+    private long shotStart = 0;
 
-            intake.set(0.0);
-            intake.setJaw(Constants.Intake.JAW_OPEN);
-        } else if (state == States.OFF) {
-            arm.run(Arm.States.OFF);
-            arm.setManual(0.0);
-            intake.set(0.0);
+    public void shoot(boolean state) {
+        //puncher.setPuncher(state);
+        intake.setJaw(state);
+        long timeForshot = 250;
+        if ((state != prevShot) && state) {
+            shotStart = System.currentTimeMillis();
         }
 
+        puncher.shoot(System.currentTimeMillis() - shotStart > timeForshot && state);
+
+        //setPuncher(System.currentTimeMillis() - shotStart < timeForShot);
+        prevShot = state;
     }
 
     public static class States {
