@@ -19,7 +19,7 @@ public class Arm {
 
     private Victor arm_Motor = null;
     private AnalogChannel pot;
-    private double target = 0;
+    private double target = Constants.Arm.STOW_POS;
     private double manual = 0;
 
     private double lowerLimit = Constants.Arm.LOWER_LIMIT;
@@ -71,9 +71,16 @@ public class Arm {
     /**
      * Sets the target setpoint for closed loop mode
      *
+     * Constrains input to between upper and lower software limits.
+     *
      * @param target
      */
     public void setTarget(double target) {
+        if (target > this.upperLimit) {
+            target = this.upperLimit;
+        } else if (target < this.lowerLimit) {
+            target = this.lowerLimit;
+        }
         this.target = target;
     }
 

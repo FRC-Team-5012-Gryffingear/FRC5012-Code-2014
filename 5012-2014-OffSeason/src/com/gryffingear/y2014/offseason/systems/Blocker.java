@@ -15,7 +15,7 @@ public class Blocker {
 
     private Solenoid blockerSolenoid = null;
 
-    public Blocker(int motorPort, int blockerSol) {
+    public Blocker(int blockerSol) {
         blockerSolenoid = new Solenoid(blockerSol);
     }
 

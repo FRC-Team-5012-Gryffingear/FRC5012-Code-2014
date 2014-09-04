@@ -13,14 +13,15 @@ import edu.wpi.first.wpilibj.Solenoid;
  */
 public class Puncher {
 
-    private Solenoid puncherSolenoid = null;
+    private Solenoid puncherSolenoidA = null;
 
-    public Puncher(int puncherSol) {
-        puncherSolenoid = new Solenoid(puncherSol);
+    public Puncher(int puncherSolA) {
+        puncherSolenoidA = new Solenoid(puncherSolA);
+
     }
 
     public void setPuncher(boolean state) {
-        puncherSolenoid.set(state);
+        puncherSolenoidA.set(state);
 
     }
 

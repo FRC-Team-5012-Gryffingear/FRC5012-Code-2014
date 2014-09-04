@@ -30,6 +30,11 @@ public class Robot {
      */
     public Compressor compressor = null;
 
+    public Blocker blocker = null;
+
+    /**
+     * Robot's instance of blocker system
+     */
     private Robot() {
 
         // Initialize all robot subsystems.
@@ -42,6 +47,8 @@ public class Robot {
         compressor = new Compressor(Ports.COMPRESSOR_SWITCH_PORT,
                 Ports.COMPRESSOR_RELAY_PORT);
         compressor.start();
+
+        blocker = new Blocker(Ports.BLOCKER_PORT);
 
     }
 

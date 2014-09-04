@@ -24,6 +24,9 @@ public class NegativeInertiaAccumulator {
     }
 
     public void setScalar(double newScalar) {
+        if (this.scalar != newScalar) {
+            accumulator = 0;
+        }
         this.scalar = newScalar;
     }
 

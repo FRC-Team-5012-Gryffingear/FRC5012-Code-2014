@@ -6,11 +6,11 @@
 /*----------------------------------------------------------------------------*/
 package com.gryffingear.y2014.offseason;
 
-import com.gryffingear.y2014.offseason.auton.ShootOneBallAuton;
+//import com.gryffingear.y2014.offseason.auton.CheesyVisionMobility;
+import com.gryffingear.y2014.offseason.auton.ArcadeDrive;
 import com.gryffingear.y2014.offseason.config.Constants;
 import com.gryffingear.y2014.offseason.config.Ports;
 import com.gryffingear.y2014.offseason.systems.Robot;
-import com.gryffingear.y2014.offseason.utilities.NegativeInertiaAccumulator;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -32,6 +32,8 @@ public class Main extends IterativeRobot {
     Joystick rightstick = new Joystick(Ports.RIGHT_JOY_PORT);
     Joystick gamepad = new Joystick(Ports.OPERATOR_JOY_PORT);
 
+    //CheesyVision
+//    public static CheesyVisionServer server = CheesyVisionServer.getInstance();
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -50,11 +52,14 @@ public class Main extends IterativeRobot {
         if (currAuton != null) {
             currAuton.cancel();
             currAuton = null;
+
         }
 
+//        server.setPort(1180);
+//        server.start();
         // Initialize new auton.
         // Todo: make this selectable via smartdashboard or something.
-        currAuton = new ShootOneBallAuton();
+        currAuton = new ArcadeDrive();
 
         // Add the currently selected auton to the scheduler for execution.
         Scheduler.getInstance().add(currAuton);
@@ -69,29 +74,45 @@ public class Main extends IterativeRobot {
     }
 
     // Quickturn and quickstop neg inertia accumulators for driver.
-    NegativeInertiaAccumulator throttleNia = new NegativeInertiaAccumulator(Constants.Drivetrain.QUICK_STOP);
-    NegativeInertiaAccumulator turningNia = new NegativeInertiaAccumulator(Constants.Drivetrain.QUICK_TURN);
-
+    //NegativeInertiaAccumulator throttleNia = new NegativeInertiaAccumulator(Constants.Drivetrain.QUICK_STOP);
+    //Ne`gativeInertiaAccumulator turningNia = new NegativeInertiaAccumulator(Constants.Drivetrain.QUICK_TURN);
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
+    public void teleopInit() {
+        //server.stop();
+        if (currAuton != null) {
+            currAuton.cancel();
+            currAuton = null;
 
-        // DRIVER //////////////////
-        double slowMode = 1.0;
-        if (leftstick.getRawButton(1) || rightstick.getRawButton(1)) {
-            slowMode = 1.0;
-            //throttleNia.setScalar(2.0);
-        } else {
-            //throttleNia.setScalar(1.0);
         }
 
+    }
+
+    public void teleopPeriodic() {
+
+        //BLOCKER/////////////////////////
+        //bot.blocker.setBlocker(true);///
+        // DRIVER ////////////////////////
         // Driver inputs converted to make quickstop and quickturn easier.
         double throttle = (leftstick.getRawAxis(2) + rightstick.getRawAxis(2)) / 2;
         double turning = (leftstick.getRawAxis(2) - rightstick.getRawAxis(2)) / 2;
 
-        throttle += throttleNia.update(throttle);
+        /*  double slowMode = 1.0;
+         if (leftstick.getRawButton(1) || rightstick.getRawButton(1)) {
+         //    slowMode = 1.0;
+         throttle = 0;
+         throttleNia.setScalar(Constants.Drivetrain.QUICK_STOP * 2);
+         } else {
 
+         throttleNia.setScalar(Constants.Drivetrain.QUICK_STOP);
+         }
+
+         //turning = turning * Math.abs(turning) * 2.0;
+         // Process throttle(fwd/rev movement) input for quickstop
+         throttle += throttleNia.update(throttle);
+         turning += turningNia.update(turning);
+         */
         // Output drive inputs.
         bot.drive.tankDrive(throttle + turning, throttle - turning);
 
@@ -100,16 +121,11 @@ public class Main extends IterativeRobot {
         double intakeOut = 0.0;
 
         // Operator control logic:
-        // Todo: change these to manipulate states of shooter supersystem rather
-        // than just the arm subsystem.
-        // Todo: make these controls more intuitive.
         if (gamepad.getRawButton(3)) {
-            // Todo: change these to reference constants rather than hard-coded
-            // numbers.
-            bot.shooter.arm.setTarget(Constants.Arm.INBOUND_POS);
-        } else if (gamepad.getRawButton(4)) {
+            bot.shooter.arm.setTarget(Constants.Arm.LOWGOAL_POS);
+        } else if (gamepad.getRawButton(2)) {
             bot.shooter.arm.setTarget(Constants.Arm.PICKUP_POS);
-        } else {
+        } else if (gamepad.getRawButton(1)) {
             bot.shooter.arm.setTarget(Constants.Arm.STOW_POS);
         }
         //Roller intake controls.
@@ -126,9 +142,7 @@ public class Main extends IterativeRobot {
         //bot.shooter.puncher.shoot(gamepad.getRawButton(8));
         bot.shooter.intake.set(intakeOut);
 
-        // Intake position and motor controls
-        //bot.shooter.intake.setJaw(gamepad.getRawButton(7));
-        bot.shooter.shoot(gamepad.getRawButton(8));
+        bot.shooter.run(gamepad.getRawButton(8), gamepad.getRawButton(7), gamepad.getRawButton(5));
 
     }
 
@@ -142,7 +156,9 @@ public class Main extends IterativeRobot {
 
     public void disabledPeriodic() {
         // Print out arm position for debugging
-        System.out.println("Arm Position: " + bot.shooter.arm.getOffset());
+        System.out.println("Arm Position: " + bot.shooter.arm.getPosition());
+        System.out.println("Arm Offset: " + bot.shooter.arm.getOffset());
+
     }
 
 }

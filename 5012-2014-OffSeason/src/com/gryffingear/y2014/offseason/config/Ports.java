@@ -22,12 +22,13 @@ public class Ports {
     public static int DRIVE_RIGHT_B_PORT = 9;
 
     public static int ARM_PORT = 5;
-    public static int ARM_POT = 1;
+    public static int ARM_POT = 3;
 
     public static int INTAKE_PORT = 6;
     public static int INTAKE_JAW_PORT = 1;
 
-    public static int PUNCHER_PORT = 3;
+    public static int PUNCHER_PORTA = 3;
+    public static int BLOCKER_PORT = 2;
 
     public static int COMPRESSOR_RELAY_PORT = 1;
     public static int COMPRESSOR_SWITCH_PORT = 2;
