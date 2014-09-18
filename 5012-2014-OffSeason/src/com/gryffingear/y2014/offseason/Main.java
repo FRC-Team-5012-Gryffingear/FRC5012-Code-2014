@@ -47,7 +47,7 @@ public class Main extends IterativeRobot {
     // selected autonomous mode
 
     public void autonomousInit() {
-
+        //
         // Cancel auton if it is currently running for safety.
         if (currAuton != null) {
             currAuton.cancel();
@@ -86,7 +86,9 @@ public class Main extends IterativeRobot {
             currAuton = null;
 
         }
-
+        bot.shooter.intake.set(0);
+        bot.drive.tankDrive(0, 0);
+        bot.shooter.arm.run(-1);
     }
 
     public void teleopPeriodic() {

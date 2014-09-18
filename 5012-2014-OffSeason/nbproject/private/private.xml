@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/Main.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/auton/ArcadeDrive.java</file>
+            <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/commands/SetArmPositionCommand.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/auton/CheesyVisionBlock.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/utilities/NegativeInertiaAccumulator.java</file>
             <file>file:/C:/Users/jeremy/Documents/GitHub/FRC5012-Code-2014/5012-2014-OffSeason/src/com/gryffingear/y2014/offseason/systems/Puncher.java</file>
