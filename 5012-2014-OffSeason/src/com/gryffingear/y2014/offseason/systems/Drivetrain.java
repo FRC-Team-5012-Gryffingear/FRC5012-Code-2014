@@ -5,6 +5,7 @@
  */
 package com.gryffingear.y2014.offseason.systems;
 
+import com.gryffingear.y2014.offseason.utilities.EagleMath;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
@@ -41,6 +42,18 @@ public class Drivetrain {
      * @param rightV
      */
     public void tankDrive(double leftV, double rightV) {
+        if (Math.abs(leftV) < .1) {
+            leftV = 0;
+        } else {
+            leftV = leftV - (.1 * EagleMath.signum(leftV));
+        }
+
+        if (Math.abs(rightV) < .1) {
+            rightV = 0;
+        } else {
+            rightV = rightV - (.1 * EagleMath.signum(rightV));
+        }
+
         leftA.set(-leftV);
         leftB.set(-leftV);
 

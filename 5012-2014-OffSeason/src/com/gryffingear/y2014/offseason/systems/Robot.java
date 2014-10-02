@@ -62,4 +62,23 @@ public class Robot {
         return instance;
     }
 
+    /**
+     * Zeros and resets all robot motors.
+     */
+    public void reset() {
+        if (instance != null) {
+            drive.tankDrive(0, 0);
+            shooter.arm.run(Arm.States.OFF);
+            shooter.intake.set(0);
+            System.out.println("Robot motors reset!");
+        } else {
+            getInstance();
+            drive.tankDrive(0, 0);
+            shooter.arm.run(Arm.States.OFF);
+            shooter.intake.set(0);
+            System.out.println("Robot wasn't initialized! "
+                    + "Reinitialized and reset!");
+        }
+    }
+
 }

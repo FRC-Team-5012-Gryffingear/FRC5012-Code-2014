@@ -26,8 +26,8 @@ public class Constants {
      */
     public static class Drivetrain {
 
-        public static double QUICK_STOP = 2.0;
-        public static double QUICK_TURN = 2.0;
+        public static double QUICK_STOP = 0;
+        public static double QUICK_TURN = 1.0;
     }
 
     /**
@@ -35,19 +35,19 @@ public class Constants {
      */
     public static class Arm {
 
-        public static double ARM_P = .8;
+        public static double ARM_P = .50;
         public static double ARM_I = 0.0;
         public static double ARM_D = 0.0;
 
         public static double VOLTS_TO_DEGREES = 1.0;
 
-        public static double UPPER_LIMIT = 4.945;
-        public static double LOWER_LIMIT = UPPER_LIMIT - 2.339;
+        public static double UPPER_LIMIT = 4.9476;
+        public static double LOWER_LIMIT = UPPER_LIMIT - 2.4355;
 
         public static double STOW_POS = UPPER_LIMIT - .05;
-        public static double INBOUND_POS = UPPER_LIMIT - 1.196;
-        public static double PICKUP_POS = UPPER_LIMIT - 1.8384;
-        public static double LOWGOAL_POS = UPPER_LIMIT - 0.2751;
+        public static double INBOUND_POS = UPPER_LIMIT - 1.396;
+        public static double PICKUP_POS = UPPER_LIMIT - 1.75;
+        public static double LOWGOAL_POS = UPPER_LIMIT - 0.451;
 
     }
 

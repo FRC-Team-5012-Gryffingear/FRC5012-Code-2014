@@ -17,7 +17,7 @@ public class ArcadeDrive extends CommandGroup {
 
     public ArcadeDrive() {
         this.addSequential(new WaitCommand(5));
-        this.addSequential(new ArcadeDriveCommand(.5, .5, 5));
+        this.addSequential(new ArcadeDriveCommand(.5, 0, 5));
 
     }
 
