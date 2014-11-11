@@ -25,8 +25,10 @@ public class Shooter {
         arm = new Arm(Ports.ARM_PORT,
                 Ports.ARM_POT);
         intake = new Intake(Ports.INTAKE_PORT,
-                Ports.INTAKE_JAW_PORT);
+                Ports.INTAKE_JAW_PORT,
+                Ports.BUMP_SWITCH);
         puncher = new Puncher(Ports.PUNCHER_PORTA);
+
         arm.setTarget(Constants.Arm.STOW_POS);
     }
 

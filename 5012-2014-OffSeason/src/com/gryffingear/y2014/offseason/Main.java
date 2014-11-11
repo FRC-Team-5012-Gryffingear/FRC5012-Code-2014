@@ -7,9 +7,12 @@
 package com.gryffingear.y2014.offseason;
 
 //import com.gryffingear.y2014.offseason.auton.CheesyVisionMobility;
-import com.gryffingear.y2014.offseason.auton.ArcadeDrive;
+import com.gryffingear.y2014.offseason.auton.BlockerAuton;
+import com.gryffingear.y2014.offseason.auton.DoNothingAuton;
+import com.gryffingear.y2014.offseason.auton.LowScoreAuton;
 import com.gryffingear.y2014.offseason.config.Constants;
 import com.gryffingear.y2014.offseason.config.Ports;
+import com.gryffingear.y2014.offseason.systems.Arm;
 import com.gryffingear.y2014.offseason.systems.Robot;
 import com.gryffingear.y2014.offseason.utilities.NegativeInertiaAccumulator;
 import com.gryffingear.y2014.offseason.utilities.ThrottledPrinter;
@@ -63,15 +66,18 @@ public class Main extends IterativeRobot {
             System.out.println("[STATUS] Auton was running at this time. Cancelling...");
             currAuton.cancel();
             currAuton = null;
-
         }
 
-//        server.setPort(1180);
-//        server.start();
         // Initialize new auton.
-        // Todo: make this selectable via smartdashboard or something.
-        currAuton = new ArcadeDrive();
-
+        if (leftstick.getRawAxis(4) < -.75) {
+            currAuton = new LowScoreAuton();
+            //System.out.println("TurnTrim: " + rightstick.getRawAxis(4) / 5);
+            //currAuton = new LowScoreAuton(rightstick.getRawAxis(4) / 5);
+        } else if (leftstick.getRawAxis(4) > .75) {
+            currAuton = new BlockerAuton();
+        } else {
+            currAuton = new DoNothingAuton();
+        }
         // Add the currently selected auton to the scheduler for execution.
         Scheduler.getInstance().add(currAuton);
         System.out.println("[STATUS] Auton initialized! Time elapsed: "
@@ -107,13 +113,20 @@ public class Main extends IterativeRobot {
         bot.reset();
         System.out.println("[STATUS] Teleop initialized! Time elapsed: "
                 + (System.currentTimeMillis() - beginPhase));
-        armState = 1;
+        armState = Arm.States.CLOSED_LOOP;
     }
+    boolean apbHasball = false;
 
     public void teleopPeriodic() {
 
         //BLOCKER/////////////////////////
-        //bot.blocker.setBlocker(true);///
+        boolean blockerOut = false;
+        if (leftstick.getRawButton(1)) {
+            blockerOut = false;
+        } else {
+            blockerOut = (System.currentTimeMillis() - beginPhase) > 1750;
+        }
+        bot.blocker.setBlocker(blockerOut);///
         // DRIVER ////////////////////////
         // Driver inputs converted to make quickstop and quickturn easier.
         double throttle = (leftstick.getRawAxis(2) + rightstick.getRawAxis(2)) / 2;
@@ -122,10 +135,9 @@ public class Main extends IterativeRobot {
         double slowMode = 1.0;
         if (leftstick.getRawButton(1) || rightstick.getRawButton(1)) {
             //    slowMode = 1.0;
-            throttle = 0;
+            // throttle = 0;
             throttleNia.setScalar(Constants.Drivetrain.QUICK_STOP * 2);
         } else {
-
             throttleNia.setScalar(Constants.Drivetrain.QUICK_STOP);
         }
 
@@ -140,9 +152,11 @@ public class Main extends IterativeRobot {
         // OPERATOR /////////////
         double intakeOut = 0.0;
 
-        if (gamepad.getRawButton(9) & gamepad.getRawButton(10)) {
-            armState = 0;
+        if (gamepad.getRawButton(9) && gamepad.getRawButton(10)) {
+            armState = Arm.States.OFF;
+            // Arm E-stop controls
         }
+
         // Operator control logic:
         if (gamepad.getRawButton(3)) {
             bot.shooter.arm.setTarget(Constants.Arm.LOWGOAL_POS);
@@ -150,16 +164,47 @@ public class Main extends IterativeRobot {
             bot.shooter.arm.setTarget(Constants.Arm.PICKUP_POS);
         } else if (gamepad.getRawButton(1)) {
             bot.shooter.arm.setTarget(Constants.Arm.STOW_POS);
+        } else {
+            bot.shooter.arm.setManual(gamepad.getRawAxis(4));
         }
-        bot.shooter.arm.setManual(gamepad.getRawAxis(4));
 
         //Roller intake controls.
-        if (gamepad.getRawAxis(2) > 0.3) {
-            intakeOut = -1;
-        } else if (gamepad.getRawAxis(2) < -0.3) {
-            intakeOut = .5;
+        if (gamepad.getRawAxis(2) > 0.3) {  // Outtake speed
+            intakeOut = Constants.Intake.OUTTAKE_SPEED;
+        } else if (gamepad.getRawAxis(2) < -0.3) {  // Intake speed
+            if (bot.shooter.intake.getBallPresent()) {
+                intakeOut = 0;
+            } else {
+                intakeOut = Constants.Intake.INTAKE_SPEED;
+            }
+
         } else {
             intakeOut = 0;
+
+            // Auto-passback logic:
+            if (gamepad.getRawButton(7)) {
+                //turn flag true once ball is sensed
+                if (bot.shooter.intake.getBallPresent()) {
+                    apbHasball = true;
+                }
+
+                // Run in intake before ball sensed
+                // Run out intake after ball is sensed
+                if (!apbHasball) {
+                    intakeOut = Constants.Intake.INTAKE_SPEED;
+                } else {
+                    intakeOut = Constants.Intake.OUTTAKE_SPEED;
+                }
+            } else {
+                //Reset flag if not in apb mode.
+                apbHasball = false;
+            }
+
+        }
+
+        if (Math.abs(bot.shooter.arm.getOutputSpeed()) > .5) {
+            // if the arm is moving quickly
+            // maybe pulse the intake a bit?
         }
 
         // Runs the control loops for shooter supersystem.
@@ -167,7 +212,7 @@ public class Main extends IterativeRobot {
         //bot.shooter.puncher.shoot(gamepad.getRawButton(8));
         bot.shooter.intake.set(intakeOut);
 
-        bot.shooter.run(gamepad.getRawButton(8), gamepad.getRawButton(7), gamepad.getRawButton(5));
+        bot.shooter.run(false, gamepad.getRawButton(8), gamepad.getRawButton(5));
 
         status.println("[STATUS] Teleop running for "
                 + (System.currentTimeMillis() - beginPhase) + "ms");
@@ -191,7 +236,15 @@ public class Main extends IterativeRobot {
                 + (System.currentTimeMillis() - beginPhase) + "ms");
         // Print out arm position for debugging
         System.out.println("Arm Position: " + bot.shooter.arm.getPosition());
-        System.out.println("Arm Offset: " + bot.shooter.arm.getOffset());
+        //System.out.println("Arm Offset: " + bot.shooter.arm.getOffset());
+        if (leftstick.getRawAxis(4) < -.75) {
+            System.out.println("LowGoal");
+            //  System.out.println("TurnTrim: " + rightstick.getRawAxis(4) / 5);
+        } else if (leftstick.getRawAxis(4) > .75) {
+            System.out.println("blocker");
+        } else {
+            System.out.println("nothing!");
+        }
 
     }
 

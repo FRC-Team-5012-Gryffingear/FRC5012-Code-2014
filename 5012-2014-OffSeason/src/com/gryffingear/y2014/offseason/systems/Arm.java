@@ -53,19 +53,27 @@ public class Arm {
         return this.upperLimit - getPosition();
     }
 
+    private double out = 0.0;
+
     /**
      * Sets motor controller output
      *
      * @param value
      */
     private void set(double value) {
-        if (value >= 0 && getPosition() >= upperLimit) {
-            value = 0;
-        } else if (value < 0 && getPosition() <= lowerLimit) {
-            value = 0;
-        }
+        /*if (value >= 0 && getPosition() >= upperLimit) {
+         value = 0;
+         } else if (value < 0 && getPosition() <= lowerLimit) {
+         value = 0;
+
+         }*/
+        out = value;
         arm_Motor.set(value);
 
+    }
+
+    public double getOutputSpeed() {
+        return out;
     }
 
     /**
@@ -109,6 +117,7 @@ public class Arm {
             output = 0;
         }
 
+        System.out.println("[ARM] Mode: " + state + "Out: " + output);
         this.set(output);
     }
 

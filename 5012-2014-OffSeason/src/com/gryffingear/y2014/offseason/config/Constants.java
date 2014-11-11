@@ -35,13 +35,13 @@ public class Constants {
      */
     public static class Arm {
 
-        public static double ARM_P = .50;
+        public static double ARM_P = 1.0;
         public static double ARM_I = 0.0;
         public static double ARM_D = 0.0;
 
         public static double VOLTS_TO_DEGREES = 1.0;
 
-        public static double UPPER_LIMIT = 4.9476;
+        public static double UPPER_LIMIT = 4.0;
         public static double LOWER_LIMIT = UPPER_LIMIT - 2.4355;
 
         public static double STOW_POS = UPPER_LIMIT - .05;
@@ -58,6 +58,9 @@ public class Constants {
 
         public static boolean JAW_OPEN = true;
         public static boolean JAW_CLOSE = !JAW_OPEN;
+
+        public static double INTAKE_SPEED = .5;
+        public static double OUTTAKE_SPEED = -1.0;
     }
 
     /**

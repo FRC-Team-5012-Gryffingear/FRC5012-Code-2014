@@ -5,8 +5,10 @@
  */
 package com.gryffingear.y2014.offseason.systems;
 
+import com.gryffingear.y2014.offseason.config.Ports;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * Class representing intake subsystem
@@ -17,10 +19,12 @@ public class Intake {
 
     private Victor intakeMotor = null;
     private Solenoid jawSolenoid = null;
+    private DigitalInput bumpswitch;
 
-    public Intake(int motorPort, int jawSol) {
+    public Intake(int motorPort, int jawSol, int bump) {
         intakeMotor = new Victor(motorPort);
         jawSolenoid = new Solenoid(jawSol);
+        bumpswitch = new DigitalInput(bump);
     }
 
     public void set(double value) {
@@ -29,6 +33,10 @@ public class Intake {
 
     public void setJaw(boolean state) {
         jawSolenoid.set(state);
+    }
+
+    public boolean getBallPresent() {
+        return !bumpswitch.get();
     }
 
 }
